@@ -14,33 +14,47 @@
 
          link: function(scope, elem) {
 
-            $timeout(function() {
-               draw(elem, scope.params);
-            });
+            draw(elem, scope.params);
 
             function draw() {
                var el = elem[0];
                var context = el.getContext("2d");
-               var width = scope.params.width,
-               height = scope.params.height,
-               halfWidth  = Math.floor(width / 2),
-               halfHeight = Math.floor(height / 2);
-               var imgData = context.createImageData(width, height);
-               var maxIter = 300;
 
-               for(var j = 0; j < height; j++) {
-                  for(var i = 0; i < width; i++) {
-                     var ii = 4*(j * width + i);
-                     var cPoint = mapPoint(i - halfWidth, j - halfHeight, scope.params);
-                     var nIter = iterateMbr(cPoint, maxIter)
-                     var c = getColor(maxIter, nIter);
-                     imgData.data[ii+0] = c.r;
-                     imgData.data[ii+1] = c.g;
-                     imgData.data[ii+2] = c.b;
-                     imgData.data[ii+3] = c.a;
+               $timeout(function() {
+
+                  context.fillStyle = '#eeeeee';
+                  context.fillRect(10, 10, 100, 40);
+                  context.globalAlpha = 0.8;
+                  context.font = "normal 14px Arial";
+                  context.fillStyle = '#000000';
+                  context.fillText("Processing...", 20, 34);
+
+               });
+
+               $timeout(function() {
+
+                  var width = scope.params.width,
+                  height = scope.params.height,
+                  halfWidth  = Math.floor(width / 2),
+                  halfHeight = Math.floor(height / 2);
+                  var imgData = context.createImageData(width, height);
+                  var maxIter = 300;
+
+                  for(var j = 0; j < height; j++) {
+                     for(var i = 0; i < width; i++) {
+                        var ii = 4*(j * width + i);
+                        var cPoint = mapPoint(i - halfWidth, j - halfHeight, scope.params);
+                        var nIter = iterateMbr(cPoint, maxIter)
+                        var c = getColor(maxIter, nIter);
+                        imgData.data[ii+0] = c.r;
+                        imgData.data[ii+1] = c.g;
+                        imgData.data[ii+2] = c.b;
+                        imgData.data[ii+3] = c.a;
+                     }
                   }
-               }
-               context.putImageData(imgData, 0, 0);
+                  context.putImageData(imgData, 0, 0);
+
+               });
             }
 
             var cStart;
