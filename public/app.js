@@ -1,4 +1,4 @@
 (function() {
-   'use strict';
-   angular.module('app', ['fdrawModule']);
+    'use strict';
+    angular.module('app', ['fdrawModule']);
 })();
