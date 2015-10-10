@@ -17,26 +17,23 @@
 
          link: function(scope, elem) {
 
-            $timeout(function() {
-               draw(elem, scope.params);
-            });
-
+            scope.$watch("params", function() {
+               draw();
+            }, true);
+ 
             interactions.bind(scope, elem, {
                move: function(dx, dy) {
                   scope.params.x -= dx;
                   scope.params.y -= dy;
                   scope.$apply();
-                  draw();
                },
                zoomIn: function() {
                   scope.params.zoom *= 1.5;  
                   scope.$apply();
-                  draw();
                },
                zoomOut: function() {
                   scope.params.zoom /= 1.5;  
                   scope.$apply();
-                  draw();
                }
             });
 
