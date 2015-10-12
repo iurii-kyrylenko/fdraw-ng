@@ -1,60 +1,64 @@
 (function() {
    'use strict';
 
+  /*
+   * HSV standard: Red-Yellow-Green-Cyan-Blue-Magenta-Red
+   * Usage: hsv2rgb(h, 1, h < 1);
+   */
+   function hsv2rgb(h, s, v) {
+      var r, g, b, i, f, p, q, t;
+      i = Math.floor(h * 6);
+      f = h * 6 - i;
+      p = v * (1 - s);
+      q = v * (1 - f * s);
+      t = v * (1 - (1 - f) * s);
+      switch (i % 6) {
+        case 0: r = v, g = t, b = p; break;
+        case 1: r = q, g = v, b = p; break;
+        case 2: r = p, g = v, b = t; break;
+        case 3: r = p, g = q, b = v; break;
+        case 4: r = t, g = p, b = v; break;
+        case 5: r = v, g = p, b = q; break;
+      }
+      return {
+        r: Math.round(r * 255),
+        g: Math.round(g * 255),
+        b: Math.round(b * 255),
+        a: 255
+      };
+   }   
+
+  /*
+   * Custom: White-Magenta-Blue-Cyan-Green-Yellow-Red-Black
+   * Usage: wb2rgb(h);
+   */
+   function wb2rgb(h) {
+      var r, g, b, i, p, q;
+      i = h === 1 ? 6 : Math.floor(h * 7);
+      p = h * 7 - i;
+      q = 1 - p;
+      switch (i % 7) {
+        case 0: r = 1, g = q, b = 1; break;
+        case 1: r = q, g = 0, b = 1; break;
+        case 2: r = 0, g = p, b = 1; break;
+        case 3: r = 0, g = 1, b = q; break;
+        case 4: r = p, g = 1, b = 0; break;
+        case 5: r = 1, g = q, b = 0; break;
+        case 6: r = q, g = 0, b = 0; break;
+      }
+      return {
+        r: Math.round(r * 255),
+        g: Math.round(g * 255),
+        b: Math.round(b * 255),
+        a: 255
+      };
+   }   
+
    var fdrawModule = angular.module('fdrawModule');
 
    fdrawModule.value('getColor', function(maxIter, n) {
-      var max = 255;
-      var del = Math.floor(maxIter / 7);
-
-      var level = Math.floor(n / del);
-      var ir = 0, ig = 0, ib = 0;
-
-      switch (level) {
-         case 0: // white to magenta
-         ir = max;
-         ig = Math.floor(-max / del * n + max);
-         ib = max;
-         break;
-
-         case 1: // magenta to blue
-         ir = Math.floor(-max / del * n + 2 * max);
-         ig = 0;
-         ib = max;
-         break;
-
-         case 2: // blue to cyan
-         ir = 0;
-         ig = Math.floor(max / del * n - 2 * max);
-         ib = max;
-         break;
-
-         case 3: // cyan to green
-         ir = 0;
-         ig = max;
-         ib = Math.floor(-max / del * n + 4 * max);
-         break;
-
-         case 4: // green to yellow
-         ir = Math.floor(max / del * n - 4 * max);
-         ig = max;
-         ib = 0;
-         break;
-
-         case 5: // yellow to red
-         ir = max;
-         ig = Math.floor(-max / del * n + 6 * max);
-         ib = 0;
-         break;
-
-         case 6: // red to black
-         ir = Math.floor(-max / del * n + 7 * max);
-         ig = 0;
-         ib = 0;
-         break;
-      }
-
-      return {"r": ir, "g": ig, "b": ib, "a": 255};    
+      var h = n/maxIter;
+      return wb2rgb(h);
    });
 
 })();
