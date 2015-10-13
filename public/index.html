@@ -9,13 +9,20 @@
 <body>
 
   <div ng-controller="fdrawCtrl">
-    <input ng-model="params.width" /> × <input ng-model="params.height" />
+    <input ng-model="paletteParams.width" /> × <input ng-model="paletteParams.height" />
     <div>
-      <fdraw tabindex="1" class="fdraw" params="params"></fdraw>
+      <fdraw tabindex="1" class="fdraw" type="palette" params="paletteParams"></fdraw>
     </div>
   </div>
 
-  <!--<fdraw tabindex="1" class="fdraw" params="{width:340, height:540, x:-0.6, y:0, zoom:100}"></fdraw>-->
+  <div ng-controller="fdrawCtrl">
+    <input ng-model="params.width" /> × <input ng-model="params.height" />
+    <div>
+      <fdraw tabindex="1" class="fdraw" type="mandelbrot" params="params"></fdraw>
+    </div>
+  </div>
+
+  <fdraw tabindex="1" class="fdraw" type="mandelbrot" params="{width:340, height:540, x:-0.6, y:0, zoom:100}"></fdraw>
 
   <script src="lib/angular.min.js"></script>
   <script src="app.js"></script>
@@ -23,7 +30,7 @@
   <script src="fdraw/fdraw.js"></script>
   <script src="fdraw/getColor.js"></script>
   <script src="fdraw/mapPoint.js"></script>
-  <script src="fdraw/iterateMbr.js"></script>
+  <script src="fdraw/iterate.js"></script>
   <script src="fdraw/interactions.js"></script>
 
 </body>

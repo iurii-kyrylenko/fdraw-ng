@@ -3,9 +3,9 @@
 
    var fdrawModule = angular.module('fdrawModule');
    fdrawModule.directive('fdraw',  fdraw);
-   fdraw.$inject = ['$timeout', 'iterateMbr', 'getColor', 'mapPoint', 'interactions'];
+   fdraw.$inject = ['iterate', 'getColor', 'mapPoint', 'interactions'];
 
-   function fdraw($timeout, iterateMbr, getColor, mapPoint, interactions) {
+   function fdraw(iterate, getColor, mapPoint, interactions) {
 
       return {
          restrict: "E",
@@ -15,7 +15,10 @@
             params: "="
          },
 
-         link: function(scope, elem) {
+         link: function(scope, elem, attr) {
+
+            var iterateFn =
+               (attr.type === 'mandelbrot') ? iterate.mandelbrot : iterate.colorPalette;
 
             scope.$watch("params", function() {
                draw();
@@ -52,7 +55,7 @@
                   for(var i = 0; i < width; i++) {
                      var ii = 4*(j * width + i);
                      var cPoint = mapPoint(i - halfWidth, j - halfHeight, scope.params);
-                     var nIter = iterateMbr(cPoint, maxIter)
+                     var nIter = iterateFn(cPoint, maxIter);
                      var c = getColor(maxIter, nIter);
                      imgData.data[ii+0] = c.r;
                      imgData.data[ii+1] = c.g;
