@@ -86,8 +86,7 @@
      */
     function hsv2rgb(h, s, v) {
       var r, g, b, i, f, p, q, t;
-      console.log(args);
-      if(args.length === 1) {
+      if(arguments.length === 1) {
         s = 1;
         v = h < 1;
       }
