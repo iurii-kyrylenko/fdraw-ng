@@ -56,7 +56,7 @@
                      var ii = 4*(j * width + i);
                      var cPoint = mapPoint(i - halfWidth, j - halfHeight, scope.params);
                      var nIter = iterateFn(cPoint, maxIter);
-                     var c = getColor(maxIter, nIter);
+                     var c = getColor.wb(nIter/maxIter);
                      imgData.data[ii+0] = c.r;
                      imgData.data[ii+1] = c.g;
                      imgData.data[ii+2] = c.b;
