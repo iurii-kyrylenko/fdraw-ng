@@ -26,17 +26,20 @@
  
             interactions.bind(scope, elem, {
                move: function(dx, dy) {
-                  scope.params.x -= dx;
-                  scope.params.y -= dy;
-                  scope.$apply();
+                  scope.$apply(function() {
+                     scope.params.x -= dx;
+                     scope.params.y -= dy;
+                  });
                },
                zoomIn: function() {
-                  scope.params.zoom *= 1.5;  
-                  scope.$apply();
+                  scope.$apply(function() {
+                     scope.params.zoom *= 1.5;
+                  });
                },
                zoomOut: function() {
-                  scope.params.zoom /= 1.5;  
-                  scope.$apply();
+                  scope.$apply(function() {
+                     scope.params.zoom /= 1.5;
+                  });
                }
             });
 
