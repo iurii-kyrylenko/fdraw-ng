@@ -5,18 +5,18 @@
 
     fdrawModule.factory('interactions', ['mapPoint', function(mapPoint) {
 
-        var bind = function(scope, elem, actions) {
+        var bind = function(elem, trgParams, actions) {
 
             var cStart;
             var state  = 0;
             var sx1 = 0, sy1 = 0, sx2 = 0, sy2 = 0, ex1 = 0, ey1 = 0, ex2 = 0, ey2 = 0;
 
             elem.on("mousedown", function(event) {
-               cStart = mapPoint(event.clientX, event.clientY, scope.params);
+               cStart = mapPoint(event.clientX, event.clientY, trgParams);
             });
 
             elem.on("mouseup", function(event) {
-               var cEnd = mapPoint(event.clientX , event.clientY, scope.params);
+               var cEnd = mapPoint(event.clientX , event.clientY, trgParams);
                actions.move(cEnd.x - cStart.x, cEnd.y - cStart.y);
             });
 
@@ -53,8 +53,8 @@
 
                   ex1 = event.changedTouches[0].clientX;
                   ey1 = event.changedTouches[0].clientY;
-                  var s = mapPoint(sx1, sy1, scope.params);
-                  var e = mapPoint(ex1, ey1, scope.params);
+                  var s = mapPoint(sx1, sy1, trgParams);
+                  var e = mapPoint(ex1, ey1, trgParams);
                   actions.move(e.x - s.x, e.y - s.y);
 
                } else if(state === 2) {

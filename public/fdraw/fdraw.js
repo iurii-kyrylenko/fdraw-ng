@@ -24,7 +24,7 @@
                draw();
             }, true);
  
-            interactions.bind(scope, elem, {
+            interactions.bind(elem, scope.params, {
                move: function(dx, dy) {
                   scope.params.x -= dx;
                   scope.params.y -= dy;
