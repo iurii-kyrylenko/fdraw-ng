@@ -26,17 +26,20 @@
  
             interactions.bind(elem, scope.params, {
                move: function(dx, dy) {
-                  scope.params.x -= dx;
-                  scope.params.y -= dy;
-                  scope.$apply();
+                  scope.$apply(function() {
+                     scope.params.x -= dx;
+                     scope.params.y -= dy;
+                  });
                },
                zoomIn: function() {
-                  scope.params.zoom *= 1.5;  
-                  scope.$apply();
+                  scope.$apply(function() {
+                     scope.params.zoom *= 1.5;
+                  });
                },
                zoomOut: function() {
-                  scope.params.zoom /= 1.5;  
-                  scope.$apply();
+                  scope.$apply(function() {
+                     scope.params.zoom /= 1.5;
+                  });
                }
             });
 
@@ -56,7 +59,7 @@
                      var ii = 4*(j * width + i);
                      var cPoint = mapPoint(i - halfWidth, j - halfHeight, scope.params);
                      var nIter = iterateFn(cPoint, maxIter);
-                     var c = getColor(maxIter, nIter);
+                     var c = getColor.wb(nIter/maxIter);
                      imgData.data[ii+0] = c.r;
                      imgData.data[ii+1] = c.g;
                      imgData.data[ii+2] = c.b;
